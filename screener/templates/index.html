@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <script src="https://unpkg.com/vue@next"></script> -->
+    <title>Screener</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{% static 'jquery.tablesorter.min.js'%}"></script>
+    
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <!-- tablesorter widgets (optional) -->
+    <script type="text/javascript" src="{% static 'jquery.tablesorter.widgets.min.js'%}"></script>
+
+</head>
+<body>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-8 mx-auto mt-5">          
+                <h2 class="mb-5">Crypto Coins</h2>
+                <table class="table table-borderless table-striped" id="myTable" >
+                    <thead>
+                        <tr>
+                            <th data-sort-method='none'>Symbol</th>
+                            <th data-sort-method='none'>Name</th>
+                            <th >Price</th>
+                            <th >Volume</th>
+                            <th >Change 24h</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for coin in coins %}
+                        <tr>
+                            <td class="align-middle"> {{ coin.symbol| upper }} </td>
+                            <td class="align-middle">
+                                <img src="{{ coin.image }}" alt=" {{ coin.name }} " class="px-2" width="50" >
+                                {{ coin.name }}
+                            </td>
+                            <td class="align-middle"> {{ coin.current_price }} </td>
+                            <td class="align-middle"> {{ coin.total_volume }} </td>
+                            <td class="align-middle"> {{ coin.price_change_percentage_24h|floatformat:2 }} % </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        $(function(){
+  $("#myTable").tablesorter();
+});
+    </script>
+</body>
+</html>
